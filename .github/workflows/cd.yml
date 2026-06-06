@@ -22,5 +22,5 @@ jobs:
         target: production
         push: true
         tags: ${{ vars.DOCKERHUB_USERNAME }}/cicd-demo:${{ github.sha }}
-        cache-from: type=grha
+        cache-from: type=gha
         cache-to: type=gha,mode=max

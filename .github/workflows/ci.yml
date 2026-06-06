@@ -13,5 +13,5 @@ jobs:
         context: .
         target: test
         push: false
-        cache-from: type=grha
+        cache-from: type=gha
         cache-to: type=gha,mode=max

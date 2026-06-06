@@ -15,6 +15,8 @@ jobs:
       with: 
         username: ${{vars.DOCKERHUB_USERNAME}}
         password: ${{secrets.DOCKERHUB_TOKEN}}
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v4
     - name: Build Push to docker hub
       uses: docker/build-push-action@v7
       with:
@@ -22,5 +24,5 @@ jobs:
         target: production
         push: true
         tags: ${{ vars.DOCKERHUB_USERNAME }}/cicd-demo:${{ github.sha }}
-        cache-from: type=grha
+        cache-from: type=gha
         cache-to: type=gha,mode=max

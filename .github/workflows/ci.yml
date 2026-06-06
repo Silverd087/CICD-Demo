@@ -1,0 +1,17 @@
+name: CI
+on:
+  pull_request:
+    branches: [main]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Docker build and test
+      uses: docker/build-push-action@v5
+      with:
+        context: .
+        target: test
+        push: false
+        cache-from: type=grha
+        cache-to: type=gha,mode=max

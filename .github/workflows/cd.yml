@@ -1,0 +1,25 @@
+name: CD
+on:
+  workflow_run:
+    workflow: ["CI"]
+    types: [completed]
+    branches: [main]
+jobs:
+  build-push:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Login to docker hub
+      uses: docker/login-action@v4
+      with: 
+        username: ${{vars.DOCKERHUB_USERNAME}}
+        password: ${{secrets.DOCKERHUB_TOKEN}}
+    - name: Build Push to docker hub
+      uses: docker/build-push-action@v7
+      with:
+        context: .
+        target: production
+        push: true
+        tags: ${{ vars.DOCKERHUB_USERNAME }}/cicd-demo:${{ github.sha }}
+        cache-from: type=grha
+        cache-to: type=gha,mode=max
